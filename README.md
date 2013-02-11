@@ -17,17 +17,17 @@ generate a token with this snippet of Node.js code:
     var tokenGenerator = new FirebaseTokenGenerator(YOUR_FIREBASE_SECRET);
     var token = tokenGenerator.createToken({some: "arbitrary", data: "here"});
 
-You pass createToken() an arbitrary JSON object which is then available for 
-use within your security rules via the [[rule-expressions/auth]] variable.
+You pass `createToken()` an arbitrary JSON object which is then available for 
+use within your security rules via the [auth variable](https://www.firebase.com/docs/security/rule-expressions/auth.html).
 This is how you pass trusted authentication details (e.g. the client's user 
-id) into your Firebase rules.  See [[rule-expressions/auth]] for example usage.
+id) into your Firebase rules.
 
 You can specify a second (options) argument to createToken which can contain 
 options and flags to modify how Firebase treats the token. Available options 
 are:
 
 * **admin** (boolean) - Set to true if you want to disable all
-[[security-rules]] for this client
+[security rules](https://www.firebase.com/docs/security/rule-expressions/index.html) for this client.
 
 * **debug** (boolean) - Set to true to enable debug output from your Security 
 Rules.  This debug output will be automatically output to the JavaScript 
@@ -37,7 +37,7 @@ production (as it slows down the rules implementation and gives your users
 visibility into your rules), but it can be helpful for debugging.
 
 You can generate a token with options by passing a second argument to 
-createToken, as shown:
+`createToken()`, as shown:
 
     var token = tokenGenerator.createToken(
       {some: "arbitrary", data: "here"},
