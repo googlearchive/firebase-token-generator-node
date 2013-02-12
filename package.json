@@ -1,0 +1,20 @@
+{
+  "author": "Firebase",
+  "name": "firebase-token-generator",
+  "description": "A utility to generate signed Firebase Authentication Tokens",
+  "version": "0.1.2",
+  "main": "./lib/FirebaseTokenGenerator",
+  "dependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/firebase/firebase-token-generator-node.git"
+  },
+  "keywords": [
+    "Firebase",
+    "JWT"
+  ],
+  "license": "MIT"
+}

@@ -1,9 +1,9 @@
 # Node.js Token Generator Library
 
 Firebase provides our own easy-to-use auth token generating library for Node.js, 
-which you can download as shown:
+which you can install as shown:
 
-    curl -O https://cdn.firebase.com/v0/firebase-token-generator-node.js
+    npm install firebase-token-generator
 
 To generate tokens, you'll need your Firebase Secret which you can find by 
 entering your Firebase URL into a browser and clicking the "Auth" tab.
@@ -13,7 +13,7 @@ servers since it requires your Firebase Secret.</span>
 Once you've downloaded the library and grabbed your Firebase Secret, you can 
 generate a token with this snippet of Node.js code:
 
-    var FirebaseTokenGenerator = require("./firebase-token-generator-node.js");
+    var FirebaseTokenGenerator = require("firebase-token-generator");
     var tokenGenerator = new FirebaseTokenGenerator(YOUR_FIREBASE_SECRET);
     var token = tokenGenerator.createToken({some: "arbitrary", data: "here"});
 
