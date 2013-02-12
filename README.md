@@ -43,3 +43,7 @@ You can generate a token with options by passing a second argument to
       {some: "arbitrary", data: "here"},
       {admin: true}
     );
+
+License
+-------
+[MIT](http://firebase.mit-license.org)
