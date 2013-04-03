@@ -50,6 +50,14 @@ You can generate a token with options by passing a second argument to
       {admin: true}
     );
 
+Testing
+-------
+The test suite is in test/test.js. Run it by:
+
+    $ npm install -g mocha
+    $ mocha
+    4 tests complete
+
 License
 -------
 [MIT](http://firebase.mit-license.org)
