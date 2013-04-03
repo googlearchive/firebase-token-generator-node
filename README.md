@@ -26,6 +26,12 @@ You can specify a second (options) argument to createToken which can contain
 options and flags to modify how Firebase treats the token. Available options 
 are:
 
+* **expires** (Number) - A timestamp (as number of seconds since epoch)
+denoting the time after which this token should no longer be valid.
+
+* **notBefore** (Number) - A timestamp (as number of seconds since epoch)
+denoting the time before which this token should be rejected by the server.
+
 * **admin** (boolean) - Set to true if you want to disable all
 [security rules](https://www.firebase.com/docs/security/rule-expressions/index.html) for this client.
 
