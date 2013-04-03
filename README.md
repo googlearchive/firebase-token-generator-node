@@ -3,7 +3,9 @@
 Firebase provides our own easy-to-use auth token generating library for Node.js, 
 which you can install as shown:
 
-    npm install firebase-token-generator
+```bash
+    $ npm install firebase-token-generator
+```
 
 To generate tokens, you'll need your Firebase Secret which you can find by 
 entering your Firebase URL into a browser and clicking the "Auth" tab.
@@ -45,18 +47,22 @@ visibility into your rules), but it can be helpful for debugging.
 You can generate a token with options by passing a second argument to 
 `createToken()`, as shown:
 
+```js
     var token = tokenGenerator.createToken(
       {some: "arbitrary", data: "here"},
       {admin: true}
     );
+```
 
 Testing
 -------
 The test suite is in test/test.js. Run it by:
 
+```bash
     $ npm install -g mocha
     $ mocha
     4 tests complete
+```
 
 License
 -------
