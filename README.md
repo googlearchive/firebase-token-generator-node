@@ -15,9 +15,11 @@ servers since it requires your Firebase Secret.</span>
 Once you've downloaded the library and grabbed your Firebase Secret, you can 
 generate a token with this snippet of Node.js code:
 
+```js
     var FirebaseTokenGenerator = require("firebase-token-generator");
     var tokenGenerator = new FirebaseTokenGenerator(YOUR_FIREBASE_SECRET);
     var token = tokenGenerator.createToken({some: "arbitrary", data: "here"});
+```
 
 You pass `createToken()` an arbitrary JSON object which is then available for 
 use within your security rules via the [auth variable](https://www.firebase.com/docs/security/rule-expressions/auth.html).
@@ -61,7 +63,7 @@ The test suite is in test/test.js. Run it by:
 ```bash
     $ npm install -g mocha
     $ mocha
-    4 tests complete
+    5 tests complete
 ```
 
 License

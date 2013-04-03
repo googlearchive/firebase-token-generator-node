@@ -2,6 +2,10 @@
 var assert = require("assert");
 var tokenGen = require("../lib/FirebaseTokenGenerator.js");
 
+function _decodeJWTPart(part) {
+  return JSON.parse(new Buffer(part.replace("-", "+").replace("_", "/"), "base64").toString());
+}
+
 describe("FirebaseTokenGenerator", function() {
   
   var obj = new FirebaseTokenGenerator("omgsekrit");
@@ -14,8 +18,7 @@ describe("FirebaseTokenGenerator", function() {
   it("should return something that looks like a JWT with no arguments", function() {
     var token = obj.createToken();
     var parts = token.split(".");
-    var header = parts[0].replace("-", "+").replace("_", "/");
-    header = JSON.parse(new Buffer(header, "base64").toString());
+    var header = _decodeJWTPart(parts[0]);
     assert.equal(typeof token, typeof "");
     assert.equal(parts.length, 3);
     assert.equal(header.typ, "JWT");
@@ -37,15 +40,22 @@ describe("FirebaseTokenGenerator", function() {
       iat: iat, expires: expires, notBefore: notBefore, admin: false, debug: true
     });
 
-    var parts = token.split(".");
-    var body = parts[1].replace("-", "+").replace("_", "/");
-    body = JSON.parse(new Buffer(body, "base64"));
-
+    var body = _decodeJWTPart(token.split(".")[1]);
     assert.equal(body.iat, iat);
     assert.equal(body.exp, expires);
     assert.equal(body.nbf, notBefore);
     assert.equal(body.admin, false);
     assert.equal(body.debug, true);
     assert.equal(body.d.foo, "bar");
+  });
+
+  it("should support native Date objects", function() {
+    var expires = new Date();
+    var notBefore = new Date();
+    var token = obj.createToken({}, {expires: expires, notBefore: notBefore});
+
+    var body = _decodeJWTPart(token.split(".")[1]);
+    assert.equal(body.exp, Math.round(expires.getTime() / 1000));
+    assert.equal(body.nbf, Math.round(notBefore.getTime() / 1000));
   });
 });
