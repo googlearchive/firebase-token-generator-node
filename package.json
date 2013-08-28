@@ -2,7 +2,7 @@
   "author": "Firebase",
   "name": "firebase-token-generator",
   "description": "A utility to generate signed Firebase Authentication Tokens",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "main": "./lib/FirebaseTokenGenerator",
   "dependencies": {},
   "scripts": {
