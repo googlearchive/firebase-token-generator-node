@@ -65,7 +65,7 @@ Prior to compiling from source, install all necessary dependencies:
 
 ```bash
     $ git submodule update --init
-    $ npm install -g grunt-cli mocha jasmine phantomjs
+    $ npm install -g grunt-cli mocha phantomjs
     $ npm install
     $ grunt
 ```
