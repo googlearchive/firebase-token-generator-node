@@ -1,6 +1,6 @@
 {
   "name": "firebase-token-generator",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "homepage": "https://firebase.com",
   "authors": [
     "Firebase <operations@firebase.com>"
@@ -20,7 +20,7 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "test",
-    "tests"
+    "js",
+    "lib"
   ]
 }
