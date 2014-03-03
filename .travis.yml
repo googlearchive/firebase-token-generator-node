@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "0.8"
+before_install:
+  - git submodule update --init
+  - npm install -g grunt-cli mocha jasmine phantomjs
+before_script:
+  - phantomjs --version
+script:
+  - npm test
