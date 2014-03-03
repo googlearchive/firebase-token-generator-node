@@ -58,27 +58,16 @@ You can generate a token with options by passing a second argument to
     );
 ```
 
-Compiling From Source
+Testing and Compiling From Source
 -------
 
-Prior to compiling from source, install all necessary developer dependencies:
+Prior to compiling from source, install all necessary dependencies:
 
 ```bash
     $ git submodule update --init
     $ npm install -g grunt-cli mocha jasmine phantomjs
     $ npm install
     $ grunt
-```
-
-Testing
--------
-
-To begin testing, install all necessary test dependencies:
-
-```bash
-    $ npm install -g grunt-cli mocha jasmine phantomjs
-    $ npm install
-    $ grunt test
 ```
 
 License

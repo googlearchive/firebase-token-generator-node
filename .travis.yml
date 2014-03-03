@@ -4,6 +4,7 @@ node_js:
 before_install:
   - git submodule update --init
   - npm install -g grunt-cli mocha jasmine phantomjs
+  - npm install
 before_script:
   - phantomjs --version
 script:
