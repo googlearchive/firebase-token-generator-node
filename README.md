@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/firebase/firebase-token-generator-node.png?branch=master)](https://travis-ci.org/firebase/firebase-token-generator-node)
+
 # Node.js Token Generator Library
 
 Firebase provides our own easy-to-use auth token generating library for Node.js, 
@@ -56,14 +58,27 @@ You can generate a token with options by passing a second argument to
     );
 ```
 
-Testing
+Compiling From Source
 -------
-The test suite is in test/test.js. Run it by:
+
+Prior to compiling from source, install all necessary developer dependencies:
 
 ```bash
-    $ npm install -g mocha
-    $ mocha
-    5 tests complete
+    $ git submodule update --init
+    $ npm install -g grunt-cli mocha jasmine phantomjs
+    $ npm install
+    $ grunt
+```
+
+Testing
+-------
+
+To begin testing, install all necessary test dependencies:
+
+```bash
+    $ npm install -g grunt-cli mocha jasmine phantomjs
+    $ npm install
+    $ grunt test
 ```
 
 License
