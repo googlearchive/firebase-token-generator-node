@@ -23,7 +23,8 @@ module.exports = function(grunt) {
       closure : [
         'closureBuilder:js-token-generator',
         'closureBuilder:js-token-generator-node',
-        'closureBuilder:js-token-generator-debug'
+        'closureBuilder:js-token-generator-debug',
+        'closureDepsWriter'
       ]
     },
 

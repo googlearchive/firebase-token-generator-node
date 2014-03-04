@@ -9,6 +9,12 @@ which you can install as shown:
     $ npm install firebase-token-generator
 ```
 
+or via Bower:
+
+```bash
+    $ bower install firebase-token-generator
+```
+
 To generate tokens, you'll need your Firebase Secret which you can find by 
 entering your Firebase URL into a browser and clicking the "Auth" tab.
 <span style="color:red">NOTE: You should only generate tokens on trusted 
