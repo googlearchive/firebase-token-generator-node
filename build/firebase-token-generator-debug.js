@@ -2523,7 +2523,7 @@ FirebaseTokenGenerator.isEmptyObject_ = function(obj) {
 };
 FirebaseTokenGenerator.isUselessOptionsObject_ = function(obj) {
   function containsUsefulKeys(obj) {
-    var usefulKeys = ["admin", "debug", "simulate", "iat"];
+    var usefulKeys = ["admin", "debug", "simulate"];
     for(var i in usefulKeys) {
       var key = usefulKeys[i];
       if(Object.prototype.hasOwnProperty.call(obj, key)) {

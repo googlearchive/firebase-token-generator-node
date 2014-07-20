@@ -2,7 +2,7 @@
   "author": "Firebase",
   "name": "firebase-token-generator",
   "description": "A utility to generate signed Firebase Authentication Tokens",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "main": "./build/firebase-token-generator-node.js",
   "dependencies": {},
   "devDependencies": {

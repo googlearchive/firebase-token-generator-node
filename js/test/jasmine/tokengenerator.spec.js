@@ -75,7 +75,23 @@ describe("TokenGenerator Tests", function () {
     }).toThrow();
 
     expect(function() {
+      t.createToken(null, {'expires': 0})
+    }).toThrow();
+
+    expect(function() {
       t.createToken({}, {'notBefore': 0})
+    }).toThrow();
+
+    expect(function() {
+      t.createToken(null, {'notBefore': 0})
+    }).toThrow();
+
+    expect(function() {
+      t.createToken({}, {'iat': 0})
+    }).toThrow();
+
+    expect(function() {
+      t.createToken(null, {'iat': 0})
     }).toThrow();
 
     t.createToken({}, {'debug': true})

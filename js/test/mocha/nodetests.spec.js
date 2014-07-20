@@ -28,8 +28,8 @@ describe("FirebaseTokenGenerator", function() {
 
   it("should accept iat in options", function() {
     var iat = 1365028233;
-    var token = obj.createToken(null, {iat: iat});
-    assert.equal(token, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjEzNjUwMjgyMzMsInYiOjAsImQiOm51bGx9.CRO-O-BUJvcN8r0yXnXGkIr4MQ77vh-968dj29GLcp4");
+    var token = obj.createToken({uid: 'bar'}, {iat: iat});
+    assert.equal(token, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjEzNjUwMjgyMzMsInYiOjAsImQiOnsidWlkIjoiYmFyIn19.6CsfeobxRCRd65pYddGjyeN2fh6sWvIRob1866VqDNI");
   });
 
   it("should preserve all provided options", function() {
