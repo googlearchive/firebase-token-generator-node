@@ -53,7 +53,7 @@ describe("FirebaseTokenGenerator", function() {
   it("should support native Date objects", function() {
     var expires = new Date();
     var notBefore = new Date();
-    var token = obj.createToken({}, {expires: expires, notBefore: notBefore});
+    var token = obj.createToken({ "uid": "1" }, {expires: expires, notBefore: notBefore});
 
     var body = _decodeJWTPart(token.split(".")[1]);
     assert.equal(body.exp, Math.round(expires.getTime() / 1000));

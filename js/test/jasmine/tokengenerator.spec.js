@@ -69,6 +69,16 @@ describe("TokenGenerator Tests", function () {
 
     // Empty data with options shouldn't throw.
     t.createToken({ admin: true });
+
+    expect(function() {
+      t.createToken({}, {'expires': 0})
+    }).toThrow();
+
+    expect(function() {
+      t.createToken({}, {'notBefore': 0})
+    }).toThrow();
+
+    t.createToken({}, {'debug': true})
   });
 });
 

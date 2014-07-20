@@ -48,7 +48,7 @@ FirebaseTokenGenerator.prototype.createToken = function(data, options) {
   fb.tokengenerator.validation.validateCredentialOptions(funcName, 2, options, true);
 
   options = options || {};
-  if (FirebaseTokenGenerator.isEmptyObject_(data) && FirebaseTokenGenerator.isEmptyObject_(options)) {
+  if (FirebaseTokenGenerator.isEmptyObject_(data) && FirebaseTokenGenerator.isUselessOptionsObject_(options)) {
     throw new Error(funcName + ": data is empty and no options are set.  This token will have no effect on Firebase.");
   }
 
@@ -212,6 +212,22 @@ FirebaseTokenGenerator.isEmptyObject_ = function(obj) {
   return true;
 };
 
+
+FirebaseTokenGenerator.isUselessOptionsObject_ = function(obj) {
+
+  function containsUsefulKeys(obj) {
+    var usefulKeys = ["admin", "debug", "simulate", "iat"];
+    for (var i in usefulKeys) {
+      var key = usefulKeys[i];
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  return FirebaseTokenGenerator.isEmptyObject_(obj) || !containsUsefulKeys(obj);
+};
 
 // For the node client, we need to export our self.
 if (NODE_CLIENT) {
