@@ -5,8 +5,16 @@
 
 [Firebase Custom Login](https://www.firebase.com/docs/web/guide/simple-login/custom.html)
 gives you complete control over user authentication by allowing you to authenticate users
-with secure JSON Web Tokens (JWTs). This is a token generator library for [Node.js](http://nodejs.org/)
+with secure JSON Web Tokens (JWTs). This is a token generator library for
 which allows you to easily create those JWTs.
+
+[Firebase Custom Login](https://www.firebase.com/docs/web/guide/simple-login/custom.html)
+gives you complete control over user authentication by allowing you to authenticate users
+with secure JSON Web Tokens (JWTs). The auth payload stored in those tokens is available
+for use in your Firebase [security rules](https://www.firebase.com/docs/security/api/rule/).
+This is a token generator library for [Node.js](http://nodejs.org/) which allows you to
+easily create those JWTs.
+
 
 ## Downloading
 
@@ -28,6 +36,7 @@ $ bower install firebase-token-generator --save
 tokens on *trusted servers*. Never embed your Firebase Secret directly into your application and
 never share your Firebase Secret with a connected client.
 
+
 ## Generating Tokens
 
 To generate tokens, you'll need your Firebase Secret which you can find by entering your Firebase
@@ -47,20 +56,20 @@ security rules via the [`auth` variable](https://www.firebase.com/docs/security/
 This is how you pass trusted authentication details (e.g. the client's user ID) into your
 Firebase rules.
 
+
 ## Token Options
 
 A second `options` argument can be passed to `createToken()` to modify how Firebase treats the
 token. Available options are:
 
-* **expires** (Number) - A timestamp (as number of seconds since the epoch)
-denoting the time after which this token should no longer be valid.
+* **expires** (number) - A timestamp (as number of seconds since the epoch) denoting the time
+after which this token should no longer be valid.
 
-* **notBefore** (Number) - A timestamp (as number of seconds since the epoch)
-denoting the time before which this token should be rejected by the server.
+* **notBefore** (number) - A timestamp (as number of seconds since the epoch) denoting the time
+before which this token should be rejected by the server.
 
-* **admin** (boolean) - Set to `true` if you want to disable all
-[security rules](https://www.firebase.com/docs/security/api/rule/) for this client. This will
-provide the client with read and write access to your entire Firebase.
+* **admin** (boolean) - Set to `true` if you want to disable all security rules for this client.
+This will provide the client with read and write access to your entire Firebase.
 
 * **debug** (boolean) - Set to `true` to enable debug output from your security rules. This
 debug output will be automatically output to the JavaScript console. You should generally
