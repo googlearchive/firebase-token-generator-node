@@ -47,7 +47,7 @@ generate a token with this snippet of Node.js code:
 
 ```js
 var FirebaseTokenGenerator = require("firebase-token-generator");
-var tokenGenerator = new FirebaseTokenGenerator(YOUR_FIREBASE_SECRET);
+var tokenGenerator = new FirebaseTokenGenerator(<YOUR_FIREBASE_SECRET>);
 var token = tokenGenerator.createToken({some: "arbitrary", data: "here"});
 ```
 
