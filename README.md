@@ -5,11 +5,6 @@
 
 [Firebase Custom Login](https://www.firebase.com/docs/web/guide/simple-login/custom.html)
 gives you complete control over user authentication by allowing you to authenticate users
-with secure JSON Web Tokens (JWTs). This is a token generator library for
-which allows you to easily create those JWTs.
-
-[Firebase Custom Login](https://www.firebase.com/docs/web/guide/simple-login/custom.html)
-gives you complete control over user authentication by allowing you to authenticate users
 with secure JSON Web Tokens (JWTs). The auth payload stored in those tokens is available
 for use in your Firebase [security rules](https://www.firebase.com/docs/security/api/rule/).
 This is a token generator library for [Node.js](http://nodejs.org/) which allows you to
