@@ -79,6 +79,8 @@ gives your users visibility into your rules), but it can be helpful for debuggin
 Here is an example of how to use the second `options` argument:
 
 ```js
+var FirebaseTokenGenerator = require("firebase-token-generator");
+var tokenGenerator = new FirebaseTokenGenerator(<YOUR_FIREBASE_SECRET>);
 var token = tokenGenerator.createToken(
   {some: "arbitrary", data: "here"},
   {admin: true}
