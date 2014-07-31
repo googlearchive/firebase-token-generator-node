@@ -16,7 +16,7 @@ This is a token generator library for [Node.js](http://nodejs.org/) which allows
 easily create those JWTs.
 
 
-## Downloading
+## Installation
 
 The Firebase Node.js token generator library is available via npm:
 
