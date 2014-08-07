@@ -81,28 +81,28 @@ FirebaseTokenGenerator.prototype.createOptionsClaims = function(func_name, opts)
         if (opts[o] instanceof Date) {
           claims[code] = Math.round(opts[o].getTime() / 1000);
         } else {
-          fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "number", "a number.");
+          fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "number", "a number");
           claims[code] = opts[o];
         }
         break;
       case "admin" :
-        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "boolean", "a boolean.");
+        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "boolean", "a boolean");
         claims["admin"] = opts[o];
         break;
       case "debug" :
-        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "boolean", "a boolean.");
+        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "boolean", "a boolean");
         claims["debug"] = opts[o];
         break;
       case "simulate" :
-        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "boolean", "a boolean.");
+        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "boolean", "a boolean");
         claims["simulate"] = opts[o];
         break;
       case "iat":
-        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "number", "a number.");
+        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "number", "a number");
         claims["iat"] = opts[o];
         break;
       default: {
-        throw new Error(func_name + " unrecognized option: " + o);
+        throw new Error(func_name + ": unrecognized \"" + o + "\" option");
       }
     }
   }

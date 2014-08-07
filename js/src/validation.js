@@ -73,7 +73,7 @@ fb.tokengenerator.validation.validateCredentialOptions = function(fnName, argume
   if (optional && !goog.isDef(opt)) {
     return;
   }
-    
+
   if(opt === null || typeof opt != "object") {
     throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + "must be a dictionary of token options.");
   }
@@ -81,7 +81,7 @@ fb.tokengenerator.validation.validateCredentialOptions = function(fnName, argume
 
 
 fb.tokengenerator.validation.validateOption = function(prefix, optName, opt, expectedType, suffix) {
-  if (typeof opt !== expectedType) {
-    throw new Error(prefix + " option " + optName + " must be " + suffix);
-  }  
+  if (typeof opt !== expectedType || (expectedType === "number" && isNaN(opt))) {
+    throw new Error(prefix + " option \"" + optName + "\" must be " + suffix + ", instead got " + opt);
+  }
 };
