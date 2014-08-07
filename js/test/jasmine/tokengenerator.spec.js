@@ -15,24 +15,34 @@ describe("TokenGenerator Tests", function () {
       tokengenerator.createToken({blah: 5}, {'sdkhdgrkr' : false})
     }).toThrow();
 
-    //unknown option
+    //invalid option
     expect(function() {
       tokengenerator.createToken({blah: 5}, {'expires' : false})
     }).toThrow();
 
-    //unknown option
+    //invalid option
     expect(function() {
       tokengenerator.createToken({blah: 5}, {'notBefore' : "hello"})
     }).toThrow();
 
-    //unknown option
+    //invalid option
     expect(function() {
       tokengenerator.createToken({blah: 5}, {'admin' : 5})
     }).toThrow();
 
-    //unknown option
+    //invalid option
     expect(function() {
       tokengenerator.createToken({blah: 5}, {'debug' : function() {}})
+    }).toThrow();
+
+    //null option
+    expect(function() {
+      tokengenerator.createToken({blah: 5}, {'expires' : null})
+    }).toThrow();
+
+    //NaN option
+    expect(function() {
+      tokengenerator.createToken({blah: 5}, {'expires' : NaN})
     }).toThrow();
 
     //valid options shouldn't throw

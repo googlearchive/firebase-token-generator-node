@@ -999,8 +999,8 @@ fb.tokengenerator.validation.validateCredentialOptions = function(fnName, argume
   }
 };
 fb.tokengenerator.validation.validateOption = function(prefix, optName, opt, expectedType, suffix) {
-  if(typeof opt !== expectedType) {
-    throw new Error(prefix + " option " + optName + " must be " + suffix);
+  if(typeof opt !== expectedType || expectedType === "number" && isNaN(opt)) {
+    throw new Error(prefix + ' option "' + optName + '" must be ' + suffix + ", instead got " + opt);
   }
 };
 goog.provide("goog.dom.NodeType");
@@ -2450,28 +2450,28 @@ FirebaseTokenGenerator.prototype.createOptionsClaims = function(func_name, opts)
         if(opts[o] instanceof Date) {
           claims[code] = Math.round(opts[o].getTime() / 1E3)
         }else {
-          fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "number", "a number.");
+          fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "number", "a number");
           claims[code] = opts[o]
         }
         break;
       case "admin":
-        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "boolean", "a boolean.");
+        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "boolean", "a boolean");
         claims["admin"] = opts[o];
         break;
       case "debug":
-        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "boolean", "a boolean.");
+        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "boolean", "a boolean");
         claims["debug"] = opts[o];
         break;
       case "simulate":
-        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "boolean", "a boolean.");
+        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "boolean", "a boolean");
         claims["simulate"] = opts[o];
         break;
       case "iat":
-        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "number", "a number.");
+        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "number", "a number");
         claims["iat"] = opts[o];
         break;
       default:
-        throw new Error(func_name + " unrecognized option: " + o);
+        throw new Error(func_name + ': unrecognized "' + o + '" option');
     }
   }
   return claims
