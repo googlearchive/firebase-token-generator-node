@@ -43,13 +43,14 @@ this snippet of Node.js code:
 ```js
 var FirebaseTokenGenerator = require("firebase-token-generator");
 var tokenGenerator = new FirebaseTokenGenerator("<YOUR_FIREBASE_SECRET>");
-var token = tokenGenerator.createToken({some: "arbitrary", data: "here"});
+var token = tokenGenerator.createToken({uid: "1", some: "arbitrary", data: "here"});
 ```
 
-The arbitrary payload object passed into `createToken()` is then available for use within your
-security rules via the [`auth` variable](https://www.firebase.com/docs/security/api/rule/auth.html).
+The payload object passed into `createToken()` is then available for use within your
+security rules via the [`auth` variable](https://www.firebase.com/docs/security/api/rule/auth.html)
+and must contain a "uid" that should be a string and less than 256 characters long.
 This is how you pass trusted authentication details (e.g. the client's user ID) into your
-Firebase rules.
+Firebase rules. The total length of the generated token cannot be larger than 1024 bytes long.
 
 
 ## Token Options
@@ -77,7 +78,7 @@ Here is an example of how to use the second `options` argument:
 var FirebaseTokenGenerator = require("firebase-token-generator");
 var tokenGenerator = new FirebaseTokenGenerator("<YOUR_FIREBASE_SECRET>");
 var token = tokenGenerator.createToken(
-  {some: "arbitrary", data: "here"},
+  {uid: "1", some: "arbitrary", data: "here"},
   {admin: true}
 );
 ```

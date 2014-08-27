@@ -988,7 +988,18 @@ fb.tokengenerator.validation.validateSecret = function(fnName, argumentNumber, s
     throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, false) + "must be a valid firebase namespace secret.");
   }
 };
-fb.tokengenerator.validation.validateCredentialData = function(fnName, argumentNumber, cred, optional) {
+fb.tokengenerator.validation.validateCredentialData = function(fnName, argumentNumber, data, optional) {
+  if(data === null || typeof data != "object") {
+    throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + "must be a dictionary of token data.");
+  }else {
+    if(data.uid === null || typeof data.uid !== "string") {
+      throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + 'must contain a "uid" key that must be a string.');
+    }else {
+      if(data.uid.length > 256) {
+        throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + 'must contain a "uid" key that must not be longer than 256 bytes.');
+      }
+    }
+  }
 };
 fb.tokengenerator.validation.validateCredentialOptions = function(fnName, argumentNumber, opt, optional) {
   if(optional && !goog.isDef(opt)) {
@@ -1001,6 +1012,11 @@ fb.tokengenerator.validation.validateCredentialOptions = function(fnName, argume
 fb.tokengenerator.validation.validateOption = function(prefix, optName, opt, expectedType, suffix) {
   if(typeof opt !== expectedType || expectedType === "number" && isNaN(opt)) {
     throw new Error(prefix + ' option "' + optName + '" must be ' + suffix + ", instead got " + opt);
+  }
+};
+fb.tokengenerator.validation.validateGeneratedToken = function(token) {
+  if(token.length > 1024) {
+    throw new Error("Generated token must be less than 1024 bytes long");
   }
 };
 goog.provide("goog.dom.NodeType");
@@ -2486,6 +2502,7 @@ FirebaseTokenGenerator.prototype.createToken_ = function(claims) {
   var sig = goog.crypt.base64.encodeByteArray(hashBytes, true);
   sig = this.removeBase64Pad_(sig);
   var token = encodedHeader + TOKEN_SEP + encodedClaims + TOKEN_SEP + sig;
+  fb.tokengenerator.validation.validateGeneratedToken(token);
   return token
 };
 FirebaseTokenGenerator.prototype.noPadWebsafeBase64Encode_ = function(str) {

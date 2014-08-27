@@ -16,7 +16,8 @@ describe("FirebaseTokenGenerator", function() {
 
   it("should return something that looks like a JWT with no arguments", function() {
     var token = obj.createToken({
-      'blah': 5
+      'blah': 5,
+      'uid': 'blah'
     });
     var parts = token.split(".");
     var header = _decodeJWTPart(parts[0]);
@@ -37,7 +38,7 @@ describe("FirebaseTokenGenerator", function() {
     var expires = iat + 1000;
     var notBefore = iat + 10;
 
-    var token = obj.createToken({foo: "bar"}, {
+    var token = obj.createToken({foo: "bar", uid: 'blah'}, {
       iat: iat, expires: expires, notBefore: notBefore, admin: false, debug: true
     });
 

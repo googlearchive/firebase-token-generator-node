@@ -65,8 +65,14 @@ fb.tokengenerator.validation.validateSecret = function(fnName, argumentNumber, s
   }
 };
 
-fb.tokengenerator.validation.validateCredentialData = function(fnName, argumentNumber, cred, optional) {
-  // TODO: Do a better job here. It needs to be JSON-stringifiable.
+fb.tokengenerator.validation.validateCredentialData = function(fnName, argumentNumber, data, optional) {
+  if (data === null || typeof data != "object") {
+    throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + "must be a dictionary of token data.");
+  } else if (data.uid === null || typeof data.uid !== "string") {
+    throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + "must contain a \"uid\" key that must be a string.");
+  } else if (data.uid.length > 256) {
+    throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + "must contain a \"uid\" key that must not be longer than 256 bytes.");
+  }
 };
 
 fb.tokengenerator.validation.validateCredentialOptions = function(fnName, argumentNumber, opt, optional) {
@@ -74,14 +80,19 @@ fb.tokengenerator.validation.validateCredentialOptions = function(fnName, argume
     return;
   }
 
-  if(opt === null || typeof opt != "object") {
+  if (opt === null || typeof opt != "object") {
     throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + "must be a dictionary of token options.");
   }
 };
 
-
 fb.tokengenerator.validation.validateOption = function(prefix, optName, opt, expectedType, suffix) {
   if (typeof opt !== expectedType || (expectedType === "number" && isNaN(opt))) {
     throw new Error(prefix + " option \"" + optName + "\" must be " + suffix + ", instead got " + opt);
+  }
+};
+
+fb.tokengenerator.validation.validateGeneratedToken = function(token) {
+  if (token.length > 1024) {
+    throw new Error("Generated token must be less than 1024 bytes long");
   }
 };

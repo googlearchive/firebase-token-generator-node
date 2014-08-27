@@ -155,6 +155,8 @@ FirebaseTokenGenerator.prototype.createToken_ = function(claims) {
   sig = this.removeBase64Pad_(sig);
   var token = encodedHeader + TOKEN_SEP + encodedClaims + TOKEN_SEP + sig;
 
+  fb.tokengenerator.validation.validateGeneratedToken(token);
+
   return token;
 };
 
