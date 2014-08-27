@@ -50,7 +50,7 @@ The payload object passed into `createToken()` is then available for use within 
 security rules via the [`auth` variable](https://www.firebase.com/docs/security/api/rule/auth.html)
 and must contain a "uid" that should be a string and less than 256 characters long.
 This is how you pass trusted authentication details (e.g. the client's user ID) into your
-Firebase rules. The total length of the generated token cannot be larger than 1024 bytes long.
+Firebase rules. The total length of the generated token cannot be larger than 1024 bytes.
 
 
 ## Token Options
