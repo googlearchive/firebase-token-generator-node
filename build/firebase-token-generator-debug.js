@@ -988,12 +988,17 @@ fb.tokengenerator.validation.validateSecret = function(fnName, argumentNumber, s
     throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, false) + "must be a valid firebase namespace secret.");
   }
 };
-fb.tokengenerator.validation.validateCredentialData = function(fnName, argumentNumber, data, optional) {
-  if(data === null || typeof data != "object") {
-    throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + "must be a dictionary of token data.");
+fb.tokengenerator.validation.validateCredentialData = function(fnName, argumentNumber, data, optional, isAdminToken) {
+  var isDataAnObject = typeof data === "object";
+  if(data === null || !isDataAnObject) {
+    if(!isDataAnObject && !isAdminToken) {
+      throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + "must be a dictionary of token data.");
+    }
   }else {
     if(data.uid === null || typeof data.uid !== "string") {
-      throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + 'must contain a "uid" key that must be a string.');
+      if(!isAdminToken || typeof data.uid !== "undefined") {
+        throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + 'must contain a "uid" key that must be a string.');
+      }
     }else {
       if(data.uid.length > 256) {
         throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + 'must contain a "uid" key that must not be longer than 256 bytes.');
@@ -2441,9 +2446,9 @@ FirebaseTokenGenerator = function(secret) {
 FirebaseTokenGenerator.prototype.createToken = function(data, options) {
   var funcName = "FirebaseTokenGenerator.createToken";
   fb.tokengenerator.validation.validateArgCount(funcName, 1, 2, arguments.length);
-  fb.tokengenerator.validation.validateCredentialData(funcName, 1, data, false);
   fb.tokengenerator.validation.validateCredentialOptions(funcName, 2, options, true);
   options = options || {};
+  fb.tokengenerator.validation.validateCredentialData(funcName, 1, data, false, options["admin"] === true);
   if(FirebaseTokenGenerator.isEmptyObject_(data) && FirebaseTokenGenerator.isUselessOptionsObject_(options)) {
     throw new Error(funcName + ": data is empty and no options are set.  This token will have no effect on Firebase.");
   }

@@ -65,11 +65,16 @@ fb.tokengenerator.validation.validateSecret = function(fnName, argumentNumber, s
   }
 };
 
-fb.tokengenerator.validation.validateCredentialData = function(fnName, argumentNumber, data, optional) {
-  if (data === null || typeof data != "object") {
-    throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + "must be a dictionary of token data.");
+fb.tokengenerator.validation.validateCredentialData = function(fnName, argumentNumber, data, optional, isAdminToken) {
+  var isDataAnObject = (typeof data === "object");
+  if (data === null || !isDataAnObject) {
+    if (!isDataAnObject && !isAdminToken) {
+      throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + "must be a dictionary of token data.");
+    }
   } else if (data.uid === null || typeof data.uid !== "string") {
-    throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + "must contain a \"uid\" key that must be a string.");
+    if (!isAdminToken || (typeof data.uid !== "undefined")) {
+      throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + "must contain a \"uid\" key that must be a string.");
+    }
   } else if (data.uid.length > 256) {
     throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + "must contain a \"uid\" key that must not be longer than 256 bytes.");
   }

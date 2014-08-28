@@ -28,7 +28,9 @@ FirebaseTokenGenerator = function(secret) {
  * Creates a token that authenticates a client with arbitrary data "data", and the specified options.
  *
  * @export
- * @param data Arbitrary JSON data that will be passed to the Firebase Rules API, once a client authenticates.
+ * @param data JSON data that will be passed to the Firebase Rules API once a client authenticates. Unless the
+ *                "admin" flag is set, it must contain a "uid" key, and if it does it must be a string of length
+ *                256 or less.
  * @param options The developer-supplied options for this token. Supported options are:
  *                a) "expires" -- A timestamp (as a number of seconds since the epoch) denoting a time after which
  *                          this token should no longer be valid.
@@ -44,10 +46,11 @@ FirebaseTokenGenerator = function(secret) {
 FirebaseTokenGenerator.prototype.createToken = function(data, options) {
   var funcName = 'FirebaseTokenGenerator.createToken';
   fb.tokengenerator.validation.validateArgCount(funcName, 1, 2, arguments.length);
-  fb.tokengenerator.validation.validateCredentialData(funcName, 1, data, false);
   fb.tokengenerator.validation.validateCredentialOptions(funcName, 2, options, true);
 
   options = options || {};
+  fb.tokengenerator.validation.validateCredentialData(funcName, 1, data, false, options['admin'] === true);
+
   if (FirebaseTokenGenerator.isEmptyObject_(data) && FirebaseTokenGenerator.isUselessOptionsObject_(options)) {
     throw new Error(funcName + ": data is empty and no options are set.  This token will have no effect on Firebase.");
   }
