@@ -6,6 +6,6 @@ goog.provide('fb.tokengenerator.constants');
 
 /**
  * Whether this is the node client.
- * @define {boolean}
+ * @define {boolean} Compile as a node client
  */
 var NODE_CLIENT = false;

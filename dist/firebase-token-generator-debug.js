@@ -988,30 +988,30 @@ fb.tokengenerator.validation.validateSecret = function(fnName, argumentNumber, s
     throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, false) + "must be a valid firebase namespace secret.");
   }
 };
-fb.tokengenerator.validation.validateCredentialData = function(fnName, argumentNumber, data, optional, isAdminToken) {
+fb.tokengenerator.validation.validateCredentialData = function(fnName, argumentNumber, data, isAdminToken) {
   var isDataAnObject = typeof data === "object";
   if(data === null || !isDataAnObject) {
     if(!isDataAnObject && !isAdminToken) {
-      throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + "must be a dictionary of token data.");
+      throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, false) + "must be a dictionary of token data.");
     }
   }else {
     if(data.uid === null || typeof data.uid !== "string") {
       if(!isAdminToken || typeof data.uid !== "undefined") {
-        throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + 'must contain a "uid" key that must be a string.');
+        throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, false) + 'must contain a "uid" key that must be a string.');
       }
     }else {
       if(data.uid.length > 256) {
-        throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + 'must contain a "uid" key that must not be longer than 256 bytes.');
+        throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, false) + 'must contain a "uid" key that must not be longer than 256 bytes.');
       }
     }
   }
 };
-fb.tokengenerator.validation.validateCredentialOptions = function(fnName, argumentNumber, opt, optional) {
-  if(optional && !goog.isDef(opt)) {
+fb.tokengenerator.validation.validateCredentialOptions = function(fnName, argumentNumber, opt) {
+  if(!goog.isDef(opt)) {
     return
   }
   if(opt === null || typeof opt !== "object") {
-    throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + "must be a dictionary of token options.");
+    throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, true) + "must be a dictionary of token options.");
   }
 };
 fb.tokengenerator.validation.validateOption = function(prefix, optName, opt, expectedType, suffix) {
@@ -2446,9 +2446,9 @@ var FirebaseTokenGenerator = function(secret) {
 FirebaseTokenGenerator.prototype.createToken = function(data, options) {
   var funcName = "FirebaseTokenGenerator.createToken";
   fb.tokengenerator.validation.validateArgCount(funcName, 1, 2, arguments.length);
-  fb.tokengenerator.validation.validateCredentialOptions(funcName, 2, options, true);
+  fb.tokengenerator.validation.validateCredentialOptions(funcName, 2, options);
   options = options || {};
-  fb.tokengenerator.validation.validateCredentialData(funcName, 1, data, false, options["admin"] === true);
+  fb.tokengenerator.validation.validateCredentialData(funcName, 1, data, options["admin"] === true);
   if(FirebaseTokenGenerator.isEmptyObject_(data) && FirebaseTokenGenerator.isUselessOptionsObject_(options)) {
     throw new Error(funcName + ": data is empty and no options are set.  This token will have no effect on Firebase.");
   }

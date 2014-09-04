@@ -15,7 +15,7 @@ goog.require('goog.crypt.base64');
  * Builds a new object that can generate Firebase authentication tokens.
  * @constructor
  * @export
- * @param secret The secret for the Firebase being used (get yours from the Firebase Admin Console).
+ * @param { String } secret The secret for the Firebase being used (get yours from the Firebase Admin Console).
  */
 var FirebaseTokenGenerator = function(secret) {
   fb.tokengenerator.validation.validateArgCount('new FirebaseTokenGenerator', 1, 1, arguments.length);
@@ -28,10 +28,10 @@ var FirebaseTokenGenerator = function(secret) {
  * Creates a token that authenticates a client with arbitrary data "data", and the specified options.
  *
  * @export
- * @param data JSON data that will be passed to the Firebase Rules API once a client authenticates. Unless the
+ * @param { Object } data JSON data that will be passed to the Firebase Rules API once a client authenticates. Unless the
  *                "admin" flag is set, it must contain a "uid" key, and if it does it must be a string of length
  *                256 or less.
- * @param options The developer-supplied options for this token. Supported options are:
+ * @param { Object } options The developer-supplied options for this token. Supported options are:
  *                a) "expires" -- A timestamp (as a number of seconds since the epoch) denoting a time after which
  *                          this token should no longer be valid.
  *                b) "notBefore" -- A timestamp (as a number of seconds since the epoch) denoting a time before
@@ -46,10 +46,10 @@ var FirebaseTokenGenerator = function(secret) {
 FirebaseTokenGenerator.prototype.createToken = function(data, options) {
   var funcName = 'FirebaseTokenGenerator.createToken';
   fb.tokengenerator.validation.validateArgCount(funcName, 1, 2, arguments.length);
-  fb.tokengenerator.validation.validateCredentialOptions(funcName, 2, options, true);
+  fb.tokengenerator.validation.validateCredentialOptions(funcName, 2, options);
 
   options = options || {};
-  fb.tokengenerator.validation.validateCredentialData(funcName, 1, data, false, options['admin'] === true);
+  fb.tokengenerator.validation.validateCredentialData(funcName, 1, data, options['admin'] === true);
 
   if (FirebaseTokenGenerator.isEmptyObject_(data) && FirebaseTokenGenerator.isUselessOptionsObject_(options)) {
     throw new Error(funcName + ': data is empty and no options are set.  This token will have no effect on Firebase.');
@@ -69,8 +69,9 @@ FirebaseTokenGenerator.prototype.createToken = function(data, options) {
 
 /**
  * Take the options supplied on the public API and turn them into claims we can put in the token.
- * @param opts The developer-supplied options for this token.
- * @return The resulting options dictionary to include in the token.
+ * @param { String } func_name The name of the calling function.
+ * @param { Object } opts The developer-supplied options for this token.
+ * @return { Object } The resulting options dictionary to include in the token.
  */
 FirebaseTokenGenerator.prototype.createOptionsClaims = function(func_name, opts) {
 
@@ -115,6 +116,7 @@ FirebaseTokenGenerator.prototype.createOptionsClaims = function(func_name, opts)
 
 
 /**
+ * @private
  * Generates a secure authentication token.
  *
  * Our token format follows the JSON Web Token (JWT) standard:
@@ -138,7 +140,7 @@ FirebaseTokenGenerator.prototype.createOptionsClaims = function(func_name, opts)
  * For base64-encoding we use URL-safe base64 encoding. This ensures that the entire token is URL-safe
  * and could, for instance, be placed as a query argument without any encoding (and this is what the JWT spec requires).
  *
- * @param claims A JSON object containing the security payload of this token (see "claims" above).
+ * @param { Object } claims A JSON object containing the security payload of this token (see "claims" above).
  * @return {String} The authentication token.
  */
 FirebaseTokenGenerator.prototype.createToken_ = function(claims) {
@@ -165,9 +167,10 @@ FirebaseTokenGenerator.prototype.createToken_ = function(claims) {
 
 
 /**
+ * @private
  * Base64 encodes a string with a URL-safe encoding with no padding characters.
  *
- * @param str {String} The string to encode
+ * @param {String} str The string to encode
  * @return {String} The base64 encoded version
  */
 FirebaseTokenGenerator.prototype.noPadWebsafeBase64Encode_ = function(str) {
@@ -180,7 +183,7 @@ FirebaseTokenGenerator.prototype.noPadWebsafeBase64Encode_ = function(str) {
 /**
  * Strips the padding from a base64 encoding to match the JWT spec.
  *
- * @param str
+ * @param { String } str
  * @return {*}
  * @private
  */
@@ -194,8 +197,9 @@ FirebaseTokenGenerator.prototype.removeBase64Pad_ = function(str) {
 };
 
 /**
+ * @private
  * Convert a hex string into a byte array
- * @param hex
+ * @param { String } hex
  * @return {Array}
  */
 FirebaseTokenGenerator.prototype.hexToBytes_ = function(hex) {
@@ -205,6 +209,12 @@ FirebaseTokenGenerator.prototype.hexToBytes_ = function(hex) {
   return bytes;
 };
 
+/**
+ * @private
+ * Determine whether an Object is empty
+ * @param { Object } obj
+ * @return { Boolean }
+ */
 FirebaseTokenGenerator.isEmptyObject_ = function(obj) {
   if (typeof obj !== 'object') {
     return false;
@@ -220,7 +230,12 @@ FirebaseTokenGenerator.isEmptyObject_ = function(obj) {
   return true;
 };
 
-
+/**
+ * @private
+ * Determine whether an Object contains any useful attributes
+ * @param { Object } obj
+ * @return { Boolean }
+ */
 FirebaseTokenGenerator.isUselessOptionsObject_ = function(obj) {
 
   function containsUsefulKeys(obj) {
