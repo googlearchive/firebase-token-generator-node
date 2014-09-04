@@ -2430,12 +2430,12 @@ goog.crypt.base64.init_ = function() {
   }
 };
 goog.provide("FirebaseTokenGenerator");
+goog.require("CryptoJS");
 goog.require("fb.tokengenerator.constants");
-goog.require("fb.tokengenerator.validation");
 goog.require("fb.tokengenerator.json");
 goog.require("fb.tokengenerator.utf8");
+goog.require("fb.tokengenerator.validation");
 goog.require("goog.crypt.base64");
-goog.require("CryptoJS");
 var TOKEN_SEP = ".";
 var TOKEN_VERSION = 0;
 var FirebaseTokenGenerator = function(secret) {

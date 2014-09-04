@@ -12,7 +12,7 @@ fb.tokengenerator.utf8.stringToByteArray = function(str) {
     if (c >= 0xd800 && c <= 0xdbff) {
       var high = c - 0xd800; // the high 10 bits.
       i++;
-      fb.core.util.assert(i < str.length, "Surrogate pair missing trail surrogate.");
+      fb.core.util.assert(i < str.length, 'Surrogate pair missing trail surrogate.');
       var low = str.charCodeAt(i) - 0xdc00; // the low 10 bits.
       c = 0x10000 + (high << 10) + low;
     }
@@ -44,13 +44,13 @@ fb.tokengenerator.utf8.stringLength = function(str) {
     if (c < 128) {
       p++;
     } else if (c < 2048) {
-      p+=2;
+      p += 2;
     } else if (c >= 0xd800 && c <= 0xdbff) {
       // Lead surrogate of a surrogate pair.  The pair together will take 4 bytes to represent.
-      p+=4;
+      p += 4;
       i++; // skip trail surrogate.
     } else {
-      p+=3;
+      p += 3;
     }
   }
   return p;

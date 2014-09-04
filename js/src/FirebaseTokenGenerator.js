@@ -1,13 +1,13 @@
 goog.provide('FirebaseTokenGenerator');
+goog.require('CryptoJS');
 goog.require('fb.tokengenerator.constants');
-goog.require('fb.tokengenerator.validation');
 goog.require('fb.tokengenerator.json');
 goog.require('fb.tokengenerator.utf8');
+goog.require('fb.tokengenerator.validation');
 goog.require('goog.crypt.base64');
-goog.require('CryptoJS');
 
 
-/** @const */ var TOKEN_SEP = ".";
+/** @const */ var TOKEN_SEP = '.';
 /** @const */ var TOKEN_VERSION = 0;
 
 
@@ -19,7 +19,7 @@ goog.require('CryptoJS');
  */
 var FirebaseTokenGenerator = function(secret) {
   fb.tokengenerator.validation.validateArgCount('new FirebaseTokenGenerator', 1, 1, arguments.length);
-  fb.tokengenerator.validation.validateSecret("new FirebaseTokenGenerator", 1, secret);
+  fb.tokengenerator.validation.validateSecret('new FirebaseTokenGenerator', 1, secret);
   this.mSecret = secret;
 };
 
@@ -52,15 +52,15 @@ FirebaseTokenGenerator.prototype.createToken = function(data, options) {
   fb.tokengenerator.validation.validateCredentialData(funcName, 1, data, false, options['admin'] === true);
 
   if (FirebaseTokenGenerator.isEmptyObject_(data) && FirebaseTokenGenerator.isUselessOptionsObject_(options)) {
-    throw new Error(funcName + ": data is empty and no options are set.  This token will have no effect on Firebase.");
+    throw new Error(funcName + ': data is empty and no options are set.  This token will have no effect on Firebase.');
   }
 
   var claims = this.createOptionsClaims(funcName, options);
-  claims["v"] = TOKEN_VERSION;
-  claims["d"] = data;
+  claims['v'] = TOKEN_VERSION;
+  claims['d'] = data;
 
-  if (!claims["iat"]) {
-    claims["iat"] = Math.floor(new Date().getTime() / 1000);
+  if (!claims['iat']) {
+    claims['iat'] = Math.floor(new Date().getTime() / 1000);
   }
 
   return this.createToken_(claims);
@@ -76,36 +76,36 @@ FirebaseTokenGenerator.prototype.createOptionsClaims = function(func_name, opts)
 
   var claims = {};
 
-  for(var o in opts) {
-    switch(o) {
-      case "expires":
-      case "notBefore":
-        var code = (o === "notBefore" ? "nbf" : "exp");
+  for (var o in opts) {
+    switch (o) {
+      case 'expires':
+      case 'notBefore':
+        var code = (o === 'notBefore' ? 'nbf' : 'exp');
         if (opts[o] instanceof Date) {
           claims[code] = Math.round(opts[o].getTime() / 1000);
         } else {
-          fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "number", "a number");
+          fb.tokengenerator.validation.validateOption(func_name, o, opts[o], 'number', 'a number');
           claims[code] = opts[o];
         }
         break;
-      case "admin" :
-        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "boolean", "a boolean");
-        claims["admin"] = opts[o];
+      case 'admin' :
+        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], 'boolean', 'a boolean');
+        claims['admin'] = opts[o];
         break;
-      case "debug" :
-        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "boolean", "a boolean");
-        claims["debug"] = opts[o];
+      case 'debug' :
+        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], 'boolean', 'a boolean');
+        claims['debug'] = opts[o];
         break;
-      case "simulate" :
-        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "boolean", "a boolean");
-        claims["simulate"] = opts[o];
+      case 'simulate' :
+        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], 'boolean', 'a boolean');
+        claims['simulate'] = opts[o];
         break;
-      case "iat":
-        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], "number", "a number");
-        claims["iat"] = opts[o];
+      case 'iat':
+        fb.tokengenerator.validation.validateOption(func_name, o, opts[o], 'number', 'a number');
+        claims['iat'] = opts[o];
         break;
       default: {
-        throw new Error(func_name + ": unrecognized \"" + o + "\" option");
+        throw new Error(func_name + ': unrecognized \"' + o + '\" option');
       }
     }
   }
@@ -144,7 +144,7 @@ FirebaseTokenGenerator.prototype.createOptionsClaims = function(func_name, opts)
 FirebaseTokenGenerator.prototype.createToken_ = function(claims) {
 
   //set up the header
-  var headerData = {"typ": "JWT", "alg":"HS256"};
+  var headerData = {'typ': 'JWT', 'alg': 'HS256'};
 
   //encode the header and payload
   var encodedHeader = this.noPadWebsafeBase64Encode_(fb.tokengenerator.json.stringify(headerData));
@@ -185,8 +185,8 @@ FirebaseTokenGenerator.prototype.noPadWebsafeBase64Encode_ = function(str) {
  * @private
  */
 FirebaseTokenGenerator.prototype.removeBase64Pad_ = function(str) {
-  var padStart = str.indexOf(".");
-  if(padStart >= 0) {
+  var padStart = str.indexOf('.');
+  if (padStart >= 0) {
     return str.substring(0, padStart);
   } else {
     return str;
@@ -198,7 +198,7 @@ FirebaseTokenGenerator.prototype.removeBase64Pad_ = function(str) {
  * @param hex
  * @return {Array}
  */
-FirebaseTokenGenerator.prototype.hexToBytes_ = function (hex) {
+FirebaseTokenGenerator.prototype.hexToBytes_ = function(hex) {
   for (var bytes = [], c = 0; c < hex.length; c += 2) {
     bytes.push(parseInt(hex.substr(c, 2), 16));
   }
@@ -224,7 +224,7 @@ FirebaseTokenGenerator.isEmptyObject_ = function(obj) {
 FirebaseTokenGenerator.isUselessOptionsObject_ = function(obj) {
 
   function containsUsefulKeys(obj) {
-    var usefulKeys = ["admin", "debug", "simulate"];
+    var usefulKeys = ['admin', 'debug', 'simulate'];
     for (var i in usefulKeys) {
       var key = usefulKeys[i];
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
