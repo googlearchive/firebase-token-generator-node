@@ -6,7 +6,7 @@
     "Firebase <operations@firebase.com>"
   ],
   "description": "Firebase Token Generator for JavaScript",
-  "main": "./build/firebase-token-generator.js",
+  "main": "./dist/firebase-token-generator.js",
   "keywords": [
     "Firebase",
     "synchronization",

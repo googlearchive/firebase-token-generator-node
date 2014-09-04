@@ -1010,7 +1010,7 @@ fb.tokengenerator.validation.validateCredentialOptions = function(fnName, argume
   if(optional && !goog.isDef(opt)) {
     return
   }
-  if(opt === null || typeof opt != "object") {
+  if(opt === null || typeof opt !== "object") {
     throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + "must be a dictionary of token options.");
   }
 };
@@ -2438,7 +2438,7 @@ goog.require("goog.crypt.base64");
 goog.require("CryptoJS");
 var TOKEN_SEP = ".";
 var TOKEN_VERSION = 0;
-FirebaseTokenGenerator = function(secret) {
+var FirebaseTokenGenerator = function(secret) {
   fb.tokengenerator.validation.validateArgCount("new FirebaseTokenGenerator", 1, 1, arguments.length);
   fb.tokengenerator.validation.validateSecret("new FirebaseTokenGenerator", 1, secret);
   this.mSecret = secret
@@ -2467,7 +2467,7 @@ FirebaseTokenGenerator.prototype.createOptionsClaims = function(func_name, opts)
       case "expires":
       ;
       case "notBefore":
-        var code = o == "notBefore" ? "nbf" : "exp";
+        var code = o === "notBefore" ? "nbf" : "exp";
         if(opts[o] instanceof Date) {
           claims[code] = Math.round(opts[o].getTime() / 1E3)
         }else {

@@ -85,7 +85,7 @@ fb.tokengenerator.validation.validateCredentialOptions = function(fnName, argume
     return;
   }
 
-  if (opt === null || typeof opt != "object") {
+  if (opt === null || typeof opt !== "object") {
     throw new Error(fb.tokengenerator.validation.errorPrefix_(fnName, argumentNumber, optional) + "must be a dictionary of token options.");
   }
 };

@@ -17,7 +17,7 @@ goog.require('CryptoJS');
  * @export
  * @param secret The secret for the Firebase being used (get yours from the Firebase Admin Console).
  */
-FirebaseTokenGenerator = function(secret) {
+var FirebaseTokenGenerator = function(secret) {
   fb.tokengenerator.validation.validateArgCount('new FirebaseTokenGenerator', 1, 1, arguments.length);
   fb.tokengenerator.validation.validateSecret("new FirebaseTokenGenerator", 1, secret);
   this.mSecret = secret;
@@ -80,7 +80,7 @@ FirebaseTokenGenerator.prototype.createOptionsClaims = function(func_name, opts)
     switch(o) {
       case "expires":
       case "notBefore":
-        var code = (o == "notBefore" ? "nbf" : "exp");
+        var code = (o === "notBefore" ? "nbf" : "exp");
         if (opts[o] instanceof Date) {
           claims[code] = Math.round(opts[o].getTime() / 1000);
         } else {
@@ -199,16 +199,19 @@ FirebaseTokenGenerator.prototype.removeBase64Pad_ = function(str) {
  * @return {Array}
  */
 FirebaseTokenGenerator.prototype.hexToBytes_ = function (hex) {
-  for (var bytes = [], c = 0; c < hex.length; c += 2)
+  for (var bytes = [], c = 0; c < hex.length; c += 2) {
     bytes.push(parseInt(hex.substr(c, 2), 16));
+  }
   return bytes;
 };
 
 FirebaseTokenGenerator.isEmptyObject_ = function(obj) {
-  if (typeof obj !== 'object')
+  if (typeof obj !== 'object') {
     return false;
-  if (obj === null)
+  }
+  if (obj === null) {
     return true;
+  }
   for (var key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
       return false;

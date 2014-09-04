@@ -1,5 +1,5 @@
 var assert = require("assert");
-var FirebaseTokenGenerator = require("../../../build/firebase-token-generator-node.js");
+var FirebaseTokenGenerator = require("../../../dist/firebase-token-generator-node.js");
 
 function _decodeJWTPart(part) {
   return JSON.parse(new Buffer(part.replace("-", "+").replace("_", "/"), "base64").toString());
