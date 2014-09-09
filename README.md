@@ -46,11 +46,13 @@ var tokenGenerator = new FirebaseTokenGenerator("<YOUR_FIREBASE_SECRET>");
 var token = tokenGenerator.createToken({uid: "1", some: "arbitrary", data: "here"});
 ```
 
-The payload object passed into `createToken()` is then available for use within your
-security rules via the [`auth` variable](https://www.firebase.com/docs/security/api/rule/auth.html)
-and must contain a "uid" that should be a string and less than 256 characters long.
-This is how you pass trusted authentication details (e.g. the client's user ID) into your
-Firebase rules. The total length of the generated token cannot be larger than 1024 bytes.
+The payload passed to `createToken()` is made available for use within your
+security rules via the [`auth` variable](https://www.firebase.com/docs/security/api/rule/auth.html).
+This is how you pass trusted authentication details (e.g. the client's user ID)
+to your Firebase security rules. The payload can contain any data of your
+choosing, however it must contain a "uid" key, which must be a string of less
+than 256 characters. The generated token must be less than 1024 characters in
+total.
 
 
 ## Token Options
