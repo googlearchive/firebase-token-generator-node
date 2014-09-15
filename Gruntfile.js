@@ -15,7 +15,10 @@ module.exports = function(grunt) {
         '!js/src/cryptojs.js'
       ],
       options: {
-        sub: true // Allow 
+        curly: true,
+        eqeqeq: true,
+        node: true,
+        sub: true
       }
     },
 
@@ -39,7 +42,7 @@ module.exports = function(grunt) {
       },
       'js-token-generator': {
         src        : src,
-        dest       : 'build/firebase-token-generator.js',
+        dest       : 'dist/firebase-token-generator.js',
         options    : {
           compilerOpts: {
             'generate_exports'  : true,
@@ -51,7 +54,7 @@ module.exports = function(grunt) {
       },
       'js-token-generator-debug': {
         src        : src,
-        dest       : 'build/firebase-token-generator-debug.js',
+        dest       : 'dist/firebase-token-generator-debug.js',
         options    : {
           compilerOpts: {
             'generate_exports'  : true,
@@ -63,7 +66,7 @@ module.exports = function(grunt) {
       },
       'js-token-generator-node': {
         src        : src,
-        dest       : 'build/firebase-token-generator-node.js',
+        dest       : 'dist/firebase-token-generator-node.js',
         options    : {
           compilerOpts: {
             'generate_exports'  : true,
@@ -88,7 +91,7 @@ module.exports = function(grunt) {
     jasmine: {
       dist: {
         src: [
-          'build/firebase-token-generator.js'
+          'dist/firebase-token-generator.js'
         ],
         options: {
           vendor: [],
@@ -100,7 +103,7 @@ module.exports = function(grunt) {
       },
       debug: {
         src: [
-          'build/firebase-token-generator-debug.js'
+          'dist/firebase-token-generator-debug.js'
         ],
         options: {
           vendor: [],

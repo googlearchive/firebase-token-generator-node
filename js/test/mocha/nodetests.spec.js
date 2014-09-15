@@ -1,5 +1,5 @@
 var assert = require("assert");
-var FirebaseTokenGenerator = require("../../../build/firebase-token-generator-node.js");
+var FirebaseTokenGenerator = require("../../../dist/firebase-token-generator-node.js");
 
 function _decodeJWTPart(part) {
   return JSON.parse(new Buffer(part.replace("-", "+").replace("_", "/"), "base64").toString());
@@ -16,7 +16,8 @@ describe("FirebaseTokenGenerator", function() {
 
   it("should return something that looks like a JWT with no arguments", function() {
     var token = obj.createToken({
-      'blah': 5
+      'blah': 5,
+      'uid': 'blah'
     });
     var parts = token.split(".");
     var header = _decodeJWTPart(parts[0]);
@@ -37,7 +38,7 @@ describe("FirebaseTokenGenerator", function() {
     var expires = iat + 1000;
     var notBefore = iat + 10;
 
-    var token = obj.createToken({foo: "bar"}, {
+    var token = obj.createToken({foo: "bar", uid: 'blah'}, {
       iat: iat, expires: expires, notBefore: notBefore, admin: false, debug: true
     });
 

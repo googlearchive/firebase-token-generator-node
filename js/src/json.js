@@ -26,8 +26,9 @@ fb.tokengenerator.json.parse = function(str) {
  * @return {string} The JSON contents of the object.
  */
 fb.tokengenerator.json.stringify = function(data) {
-  if (typeof JSON !== 'undefined' && goog.isDef(JSON.stringify))
+  if (typeof JSON !== 'undefined' && goog.isDef(JSON.stringify)) {
     return JSON.stringify(data);
-  else
+  } else {
     return goog.json.serialize(data);
+  }
 };
