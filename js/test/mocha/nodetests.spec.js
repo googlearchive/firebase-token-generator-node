@@ -1,8 +1,13 @@
 var assert = require("assert");
+var jsrsasign = require("jsrsasign");
 var FirebaseTokenGenerator = require("../../../dist/firebase-token-generator-node.js");
 
 function _decodeJWTPart(part) {
   return JSON.parse(new Buffer(part.replace("-", "+").replace("_", "/"), "base64").toString());
+}
+
+function _extractBody(token) {
+  return _decodeJWTPart(token.split(".")[1])
 }
 
 describe("FirebaseTokenGenerator", function() {
@@ -30,7 +35,18 @@ describe("FirebaseTokenGenerator", function() {
   it("should accept iat in options", function() {
     var iat = 1365028233;
     var token = obj.createToken({uid: 'bar'}, {iat: iat});
-    assert.equal(token, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjEzNjUwMjgyMzMsInYiOjAsImQiOnsidWlkIjoiYmFyIn19.6CsfeobxRCRd65pYddGjyeN2fh6sWvIRob1866VqDNI");
+
+    var body = _extractBody(token);
+    assert.equal(iat, body.iat);
+  });
+
+  it("should sign with HS256", function() {
+    var iat = 1365028233;
+    var token = obj.createToken({uid: 'bar'}, {iat: iat});
+
+    var key = jsrsasign.stohex("omgsekrit");
+    var valid = jsrsasign.jws.JWS.verify(token, key, ["HS256"]);
+    assert.equal(valid, true);
   });
 
   it("should preserve all provided options", function() {
@@ -42,7 +58,7 @@ describe("FirebaseTokenGenerator", function() {
       iat: iat, expires: expires, notBefore: notBefore, admin: false, debug: true
     });
 
-    var body = _decodeJWTPart(token.split(".")[1]);
+    var body = _extractBody(token);
     assert.equal(body.iat, iat);
     assert.equal(body.exp, expires);
     assert.equal(body.nbf, notBefore);
@@ -56,7 +72,7 @@ describe("FirebaseTokenGenerator", function() {
     var notBefore = new Date();
     var token = obj.createToken({ "uid": "1" }, {expires: expires, notBefore: notBefore});
 
-    var body = _decodeJWTPart(token.split(".")[1]);
+    var body = _extractBody(token);
     assert.equal(body.exp, Math.round(expires.getTime() / 1000));
     assert.equal(body.nbf, Math.round(notBefore.getTime() / 1000));
   });
