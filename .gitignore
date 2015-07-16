@@ -1,6 +1,8 @@
 # Misc
 *~
 .tmp
+*.swp
+*.swo
 
 # OS
 .DS_Store
