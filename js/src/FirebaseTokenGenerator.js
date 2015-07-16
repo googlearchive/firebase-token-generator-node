@@ -63,6 +63,10 @@ FirebaseTokenGenerator.prototype.createToken = function(data, options) {
     claims['iat'] = Math.floor(new Date().getTime() / 1000);
   }
 
+  if (!claims['exp']) {
+    claims['exp'] = claims['iat'] + 24 * 60 * 60;
+  }
+
   return this.createToken_(claims);
 };
 

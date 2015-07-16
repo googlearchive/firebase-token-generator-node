@@ -40,6 +40,15 @@ describe("FirebaseTokenGenerator", function() {
     assert.equal(iat, body.iat);
   });
 
+  it("should default expiration to 24 hours", function() {
+    var iat = 1365028233;
+    var exp = iat + 24 * 60 * 60;
+    var token = obj.createToken({uid: 'bar'}, {iat: iat});
+
+    var body = _extractBody(token);
+    assert.equal(exp, body.exp);
+  });
+
   it("should sign with HS256", function() {
     var iat = 1365028233;
     var token = obj.createToken({uid: 'bar'}, {iat: iat});
