@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/firebase/firebase-token-generator-node.svg)](https://travis-ci.org/firebase/firebase-token-generator-node)
 [![Version](https://badge.fury.io/gh/firebase%2Ffirebase-token-generator-node.svg)](http://badge.fury.io/gh/firebase%2Ffirebase-token-generator-node)
 
-[Firebase Custom Login](https://www.firebase.com/docs/web/guide/simple-login/custom.html)
+[Firebase Custom Login](https://www.firebase.com/docs/web/guide/login/custom.html)
 gives you complete control over user authentication by allowing you to authenticate users
 with secure JSON Web Tokens (JWTs). The auth payload stored in those tokens is available
 for use in your Firebase [security rules](https://www.firebase.com/docs/security/api/rule/).
@@ -43,7 +43,7 @@ this snippet of Node.js code:
 ```js
 var FirebaseTokenGenerator = require("firebase-token-generator");
 var tokenGenerator = new FirebaseTokenGenerator("<YOUR_FIREBASE_SECRET>");
-var token = tokenGenerator.createToken({uid: "1", some: "arbitrary", data: "here"});
+var token = tokenGenerator.createToken({ uid: "1", some: "arbitrary", data: "here" });
 ```
 
 The payload passed to `createToken()` is made available for use within your
@@ -80,10 +80,22 @@ Here is an example of how to use the second `options` argument:
 var FirebaseTokenGenerator = require("firebase-token-generator");
 var tokenGenerator = new FirebaseTokenGenerator("<YOUR_FIREBASE_SECRET>");
 var token = tokenGenerator.createToken(
-  {uid: "1", some: "arbitrary", data: "here"},
-  {admin: true}
+  { uid: "1", some: "arbitrary", data: "here" },
+  { admin: true }
 );
 ```
+
+
+## Authenticating With Generated Custom Tokens
+
+Tokens generated via this module can be used by the custom authentication methods in the Firebase
+SDKs, as well as via the Firebase REST API:
+
+* JavaScript: [`authWithCustomToken()`](https://www.firebase.com/docs/web/api/firebase/authwithcustomtoken.html)
+* Objective-C / Swift: [`authWithCustomToken:withCompletionBlock:`](https://www.firebase.com/docs/ios/api/#firebase_authWithCustomTokenwithCompletionBlock)
+* Java: [`authWithCustomToken()`](https://www.firebase.com/docs/android/api/#firebase_authWithCustomToken)
+* REST: [`auth`](https://www.firebase.com/docs/rest/api/#section-param-auth)
+
 
 ## Testing and Compiling From Source
 
