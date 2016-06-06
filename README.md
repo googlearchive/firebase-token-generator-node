@@ -1,7 +1,6 @@
-# Firebase Token Generator - Node.js
+# Firebase Token Generator - Node.js [![Build Status](https://travis-ci.org/firebase/firebase-token-generator-node.svg)](https://travis-ci.org/firebase/firebase-token-generator-node) [![Version](https://badge.fury.io/gh/firebase%2Ffirebase-token-generator-node.svg)](http://badge.fury.io/gh/firebase%2Ffirebase-token-generator-node)
 
-[![Build Status](https://travis-ci.org/firebase/firebase-token-generator-node.svg)](https://travis-ci.org/firebase/firebase-token-generator-node)
-[![Version](https://badge.fury.io/gh/firebase%2Ffirebase-token-generator-node.svg)](http://badge.fury.io/gh/firebase%2Ffirebase-token-generator-node)
+**WARNING: This token generator is compatible with versions 1.x.x and 2.x.x of the Firebase SDK. If you are using the 3.x.x SDK, please refer to the documentation [here](https://firebase.google.com/docs/auth/server#create_a_custom_token).**
 
 [Firebase Custom Login](https://www.firebase.com/docs/web/guide/login/custom.html)
 gives you complete control over user authentication by allowing you to authenticate users
